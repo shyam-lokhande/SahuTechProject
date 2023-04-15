@@ -19,7 +19,8 @@ from . import views
 
 urlpatterns = [
     path('',views.home,name="home" ),
+    path('subscribe/',views.subscribe,name="subscribe" ),
     path('category/',views.category,name="category" ),
     path('contact/',views.contact,name="contact" ),
-    path('single/',views.single,name="single" )
+    path('single/',views.single,name="single" ),
 ]

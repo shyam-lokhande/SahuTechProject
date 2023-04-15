@@ -1,5 +1,9 @@
-from django.shortcuts import render
-from .models import news,latestNews
+from django.contrib import messages
+from django.shortcuts import render,redirect
+from .models import news,latestNews,subscribe
+from django.core.mail import send_mail
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
 
 def home(req):
     total_list = news.objects.order_by('?')[:10]
@@ -24,6 +28,8 @@ def home(req):
         "trending_news2":trending_news2,
 
     }
+
+    
     return render(req,"index.html",context)
 
 def single(req):
@@ -34,3 +40,24 @@ def contact(req):
 
 def category(req):
     return render(req,"category.html")
+
+def subscribe(req):
+    if req.method=='POST':
+        email = req.POST.get('email')
+        if not email:
+            messages.error(req,'Please enter the email')
+            return redirect('/')
+        
+        if subscribe.objects.filter(mail_id=email):
+            messages.error(req,'This email is already registerd')
+            return redirect('/')
+        
+        try:
+            validate_email(email)
+        except ValidationError as e:
+            messages.error(req,e.messages[0])
+
+        subscrib_instance = subscribe(mail_id=email)
+        subscrib_instance.save()
+        redirect(req.META.get('HTTP_REFERER','/'))
+

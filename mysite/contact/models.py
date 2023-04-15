@@ -39,7 +39,7 @@ class trendingNews(models.Model):
     def __str__(self):
         return self.title
     
-class subscribers(models.Model):
+class subscribe(models.Model):
     mail_id = models.EmailField(primary_key=True)
 
     def __str__(self):

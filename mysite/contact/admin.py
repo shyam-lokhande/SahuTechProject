@@ -8,4 +8,5 @@ admin.site.register(Contact,ContactAdmin)
 admin.site.register(news)
 admin.site.register(latestNews)
 admin.site.register(trendingNews)
-# Register your models here.
+admin.site.register(subscribe)
+
