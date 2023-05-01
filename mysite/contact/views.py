@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.shortcuts import render,redirect
-from .models import news,latestNews,subscribe
+from .models import news,latestNews,subscribe,trendingNews
 from django.core.mail import send_mail
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
@@ -12,10 +12,12 @@ def home(req):
     featured_news = news.objects.order_by('?')[:6]
     latest_news1 = latestNews.objects.order_by('?')[:2]
     latest_news2 = latestNews.objects.order_by('?')[:2]
+    latest_news5 = latestNews.objects.order_by('?')[:2]
+    latest_news6 = latestNews.objects.order_by('?')[:2]
     latest_news3 = news.objects.order_by('?')[:2]
     latest_news4 = news.objects.order_by('?')[:2]
-    trending_news1 = news.objects.order_by('?')[:5]
-    trending_news2 = news.objects.order_by('?')[:3]
+    trending_news1 = trendingNews.objects.order_by('?')[:5]
+    trending_news2 = trendingNews.objects.order_by('?')[:3]
     context = {
         "news1":object_list1,
         "news2":object_list2,
@@ -24,6 +26,8 @@ def home(req):
         "latest_news2":latest_news2,
         "latest_news3":latest_news3,
         "latest_news4":latest_news4,
+        "latest_news5":latest_news5,
+        "latest_news6":latest_news6,
         "trending_news1":trending_news1,
         "trending_news2":trending_news2,
 
